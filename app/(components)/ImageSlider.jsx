@@ -46,7 +46,7 @@ export default function ImageSlider() {
         slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
-        autoplay={{ delay: 3000 }}
+        // autoplay={{ delay: 3000 }}
       >
         {Images.map((image, index) => (
           <SwiperSlide key={index}>

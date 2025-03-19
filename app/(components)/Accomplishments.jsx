@@ -24,7 +24,7 @@ const Accomplishments = () => {
                     flexDirection="column"
                 >
                     <Image src="/Accomplishments/chemo.png" alt="Accomplishments" width={100} height={100} />
-                    <Typography variant="h3" fontWeight="bold" color="orange" sx={{ textShadow: "3px 3px 5px rgba(0, 0, 0, 0.8)" }}>751</Typography>
+                    <Typography variant="h3" fontWeight="bold" color="orange" sx={{ textShadow: "3px 3px 5px rgba(0, 0, 0, 0.8)" }}>43587</Typography>
                     <Typography borderTop="1px gray solid" padding={1} margin={1} display="flex" width="100%" justifyContent="center">Patient Footfall</Typography>
                 </Grid>
                 <Grid
@@ -35,8 +35,8 @@ const Accomplishments = () => {
                     flexDirection="column"
                 >
                     <Image src="/Accomplishments/radiation.png" alt="Accomplishments" width={100} height={100} />
-                    <Typography variant="h3" fontWeight="bold" color="orange" sx={{ textShadow: "3px 3px 5px rgba(0, 0, 0, 0.8)" }}>2778</Typography>
-                    <Typography borderTop="1px gray solid" padding={1} margin={1} display="flex" width="100%" justifyContent="center">Patient Footfall</Typography>
+                    <Typography variant="h3" fontWeight="bold" color="orange" sx={{ textShadow: "3px 3px 5px rgba(0, 0, 0, 0.8)" }}>12515</Typography>
+                    <Typography borderTop="1px gray solid" padding={1} margin={1} display="flex" width="100%" justifyContent="center">Chemo Session</Typography>
                 </Grid>
                 <Grid
                     item
@@ -46,8 +46,8 @@ const Accomplishments = () => {
                     flexDirection="column"
                 >
                     <Image src="/Accomplishments/doctors.png" alt="Accomplishments" width={100} height={100} />
-                    <Typography variant="h3" fontWeight="bold" color="orange" sx={{ textShadow: "3px 3px 5px rgba(0, 0, 0, 0.8)" }}>50</Typography>
-                    <Typography borderTop="1px gray solid" padding={1} margin={1} display="flex" width="100%" justifyContent="center">Patient Footfall</Typography>
+                    <Typography variant="h3" fontWeight="bold" color="orange" sx={{ textShadow: "3px 3px 5px rgba(0, 0, 0, 0.8)" }}>30774</Typography>
+                    <Typography borderTop="1px gray solid" padding={1} margin={1} display="flex" width="100%" justifyContent="center">Radiation Session</Typography>
                 </Grid>
             </Grid>
         </Box>

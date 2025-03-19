@@ -35,7 +35,7 @@ const Entries = () => {
     return (<>
         <Box display="flex" flexDirection="column" width="100%">
             {Entris.map((Entry, index) => {
-                return (<Grid key={Entry.title} container display="flex" width="100%" sx={index / 2 === 0 ? { flexDirection: "row" } : { flexDirection: "row-reverse" }} alignItems="center" justifyContent="center" marginBottom={2}>
+                return (<Grid key={Entry.title} container display="flex" width="100%" sx={index % 2 === 0 ? { flexDirection: "row" } : { flexDirection: "row-reverse" }} alignItems="center" justifyContent="center" marginBottom={2}>
                     <Grid item xs={6} padding={4} sx={{ position: "relative", overflow: "hidden" }} width="100%" height="300px">
                         <Image src={`http://localhost:3001/${Entry.path}`} alt="who we are" fill style={{ objectFit: "cover", borderRadius: "5px"}} />
                     </Grid>
