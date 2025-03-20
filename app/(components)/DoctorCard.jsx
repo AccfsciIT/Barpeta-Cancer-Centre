@@ -9,14 +9,14 @@ import Link from "next/link";
 import { Box } from "@mui/material";
 import Image from "next/image";
 
-const DoctorCard = ({ image, name, speciality, text }) => {
+const DoctorCard = ({ image, name, speciality, text, profile }) => {
   const titleLimit = 47;
   const textLimit = 151;
 
   const doctorSlug = name?.toLowerCase().replace(/\s+/g, "-") || "doctor";
 
   return (
-    <Card sx={{ width:"80%", height: 420, textAlign: "center", p: 2 }}>
+    <Card sx={{ width: "80%", height: 420, textAlign: "center", p: 2 }}>
       <CardActionArea>
         {/* Circular Image Centered Correctly */}
         <Box
@@ -38,15 +38,17 @@ const DoctorCard = ({ image, name, speciality, text }) => {
                 border: "3px solid #ddd",
               }}
             >
-              <Image
-                src={`http://localhost:3001/${image}`}
+              <img
+                src="https://barpetacancercentre.org/images/allLocationDoctors/doctor_image12.jpg"
                 alt={name}
-                width={150} // Maintain 1:1 aspect ratio
-                height={150}
+
                 style={{
-                  objectFit: "cover",
+                  objectFit: "cover", width: "150", // Maintain 1:1 aspect ratio
+                  height: "150"
                 }}
+              // unoptimized={true}
               />
+              {/* <img src='https://barpetacancercentre.org/images/allLocationDoctors/doctor_image12.jpg'/> */}
             </Box>
           )}
         </Box>
@@ -56,20 +58,37 @@ const DoctorCard = ({ image, name, speciality, text }) => {
             {name ? `${name.slice(0, titleLimit)}` : "No Name"}
           </Typography>
           <Typography variant="body2" fontStyle="italic" color="primary">
-            {speciality || "Speciality Not Available"}
+            {text || "Speciality Not Available"}
           </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
-            {text ? `${text.slice(0, textLimit)}...` : "No Description"}
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mt: 1,
+              height: 130, // Fixed height (adjust as needed)
+              overflowY: "auto", // Enables scrolling if content exceeds height
+              scrollbarWidth: "thin", // Makes the scrollbar less intrusive
+              "&::-webkit-scrollbar": {
+                width: "6px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "#bbb",
+                borderRadius: "4px",
+              },
+            }}
+          >
+            {profile ? `${profile}` : "No Description"}
           </Typography>
         </CardContent>
+
       </CardActionArea>
-      <CardActions>
-        <Link href={`/doctors/${doctorSlug}`} passHref legacyBehavior>
+      {/* <CardActions>
+        <Link href={`https://barpetacancercentre.org/images/allLocationDoctors/doctor_image12.jpg`} passHref legacyBehavior>
           <a target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>
             <East sx={{ marginLeft: "auto", color: "primary.main" }} />
           </a>
         </Link>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 };

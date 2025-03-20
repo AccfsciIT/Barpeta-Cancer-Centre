@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ExpandMore } from "@mui/icons-material";
 import { HospitalID, API } from "../(components)/Global";
+import Loader from "./Loader";
 
 const navItems = [
     { name: "Home", link: "/" },
@@ -15,6 +16,7 @@ const navItems = [
     { name: "Facilities", link: "/facilities" },
     { name: "Hospitals", link: "/" },
     { name: "News & Events", link: "/newsAndEvents" },
+    { name: "Academics", link: "/academics" },
     { name: "Contact Us", link: "/contact" }
 ];
 
@@ -57,7 +59,7 @@ export default function Navbar({ Title }: { Title: string }) {
     }, []);
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <><Loader/></>;
     }
 
     return (

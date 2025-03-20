@@ -2,6 +2,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import {HospitalID, API} from "../(components)/Global";
+import Loader from "./Loader";
 
 const Hospitals = [{ name: "Barpeta Cancer Centre" }, { name: "Dibrugarh Cancer Centre" }];
 
@@ -30,7 +31,7 @@ const OurHospitals = () => {
     }, [])
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <><Loader/></>;
     }
     return (
         <Box paddingLeft={4} marginY={5}>

@@ -9,6 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useEffect, useState } from "react";
 import {HospitalID, API} from "../(components)/Global";
+import Loader from "../(components)/Loader";
 
 export default function ImageSlider() {
   const [Images, setImages] = useState({});
@@ -35,7 +36,7 @@ export default function ImageSlider() {
     fetchImageSlider();
   }, []);
   if (loading) {
-    return <p>Loading...</p>;
+    return <><Loader/></>;
   }
   return (
 

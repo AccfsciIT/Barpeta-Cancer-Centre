@@ -6,6 +6,7 @@ import { autoPlay } from "react-swipeable-views-utils";
 import { DoctorDetails } from "./DoctorDetails";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import {HospitalID, API} from "../Global";
+import Loader from "../Loader";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -50,7 +51,7 @@ const DoctorSlider = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <><Loader/></>;
   }
   return (
     <Box sx={{ position: "relative", maxWidth: "100%", flexGrow: 1 }}>

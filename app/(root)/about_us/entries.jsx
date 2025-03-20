@@ -4,6 +4,7 @@ import { Box, Grid, Typography } from "@mui/material"
 import Image from "next/image"
 import { useEffect, useState } from "react";
 import {HospitalID, API} from "../../(components)/Global";
+import Loader from "../../(components)/Loader";
 
 const Entries = () => {
     const [Entris, setEntries] = useState({});
@@ -30,7 +31,7 @@ const Entries = () => {
       fetchAboutUs();
     }, []);
     if (loading) {
-      return <p>Loading...</p>;
+      return <><Loader/></>;
     }
     return (<>
         <Box display="flex" flexDirection="column" width="100%">
