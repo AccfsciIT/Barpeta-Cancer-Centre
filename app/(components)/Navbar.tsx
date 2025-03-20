@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AppBar, Box, Toolbar, IconButton, Typography, Button, Drawer, List, ListItem, ListItemText, Menu, MenuItem } from "@mui/material";
+import { AppBar, Box, Toolbar, IconButton, Typography, Button, Drawer, List, ListItem, ListItemText, Menu, MenuItem, Avatar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
 import Link from "next/link";
 import { ExpandMore } from "@mui/icons-material";
-import {HospitalID, API} from "../(components)/Global";
+import { HospitalID, API } from "../(components)/Global";
 
 const navItems = [
     { name: "Home", link: "/" },
@@ -64,12 +64,12 @@ export default function Navbar({ Title }: { Title: string }) {
         <AppBar position="static" sx={{ backgroundColor: { xs: "none", md: "#0076bd" } }}>
             <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 {/* Logo & Title */}
-                    <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
-                        <Image src="http://localhost:3001/logo/accf_logo.png" alt="logo" width={50} height={50} />
-                    </Box>
-                    <Typography sx={{ display: { xs: "flex", md: "none" }, fontSize: "1rem", fontWeight: "bold" }}>
-                        {Title}
-                    </Typography>
+                <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
+                    <Image src="http://localhost:3001/logo/accf_logo.png" alt="logo" width={50} height={50} />
+                </Box>
+                <Typography sx={{ display: { xs: "flex", md: "none" }, fontSize: "1rem", fontWeight: "bold" }}>
+                    {Title}
+                </Typography>
 
                 {/* Desktop Menu */}
                 <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
@@ -103,7 +103,13 @@ export default function Navbar({ Title }: { Title: string }) {
                             </Link>
                         )
                     )}
+
                 </Box>
+                <Link href="/social_infra" passHref legacyBehavior >
+                    <Box sx={{ display: { xs: "none", md: "flex" }}} alignItems="center">
+                        <Button sx={{ color: "#fff" }}><Avatar alt="Remy Sharp" sx={{ backgroundColor: "white", marginRight: "2px" }} src="/SocialInfra/soc_inf.png" />Social Infrastructure</Button>
+                    </Box>
+                </Link>
 
                 {/* Mobile Menu Button */}
                 <IconButton edge="end" sx={{ display: { xs: "block", md: "none" }, color: "#fff" }} onClick={handleDrawerToggle}>

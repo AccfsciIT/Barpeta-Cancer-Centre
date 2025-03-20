@@ -49,6 +49,7 @@ const OurHospitals = () => {
                             alignItems: "center",
                             display: "flex"
                         }}
+                        marginRight={1}
                     >
                         <Typography textAlign="center">{hospital.name}</Typography>
                     </Grid>
