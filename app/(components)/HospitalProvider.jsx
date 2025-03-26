@@ -1,7 +1,8 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import {HospitalID, API} from "../(components)/Global";
+import { HospitalID, API } from "../(components)/Global";
+import { fetchHospitalDetailsAPI } from "@/lib/fetchData";
 const API_URL = `${API}api/hospital_details`;
 
 const HospitalContext = createContext(null);
@@ -12,14 +13,13 @@ export function HospitalProvider({ children }) {
     useEffect(() => {
         const fetchHospitalDetails = async () => {
             try {
-                const response = await fetch(`${API_URL}?HospitalID=${HospitalID}`);
-                if (!response.ok) {
-                    throw new Error("Failed to fetch hospital details");
-                }
-                const data = await response.json();
-                setHospitalDetails(data.result);
+                const data = await fetchHospitalDetailsAPI();
+                setHospitalDetails(data || []); // ✅ Ensure it's an array
             } catch (error) {
-                console.error(error);
+                console.error("Error fetching About Us data:", error);
+                setHospitalDetails([]);
+            } finally {
+                setLoading(false);
             }
         };
 

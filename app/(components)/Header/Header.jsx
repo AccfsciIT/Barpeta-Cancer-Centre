@@ -1,75 +1,105 @@
 "use client";
 import Image from "next/image";
-import { Box, createTheme } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import Navbar from "../Navbar";
 import SocialIcons from "../SocialIcons";
 import { useHospital } from "../../(components)/HospitalProvider";
-import { useEffect, useState } from "react";
-
-const theme = createTheme({
-    components: {
-        MuiSvgIcon: {
-            styleOverrides: {
-                root: {
-                    color: "brown",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "50%",
-                    border: "1px solid brown",
-                    padding: "3px",
-                    cursor: "pointer",
-                    transition: "background-color 0.3s",
-                    "&:hover": {
-                        backgroundColor: "#f0e6e6",
-                    },
-                },
-            },
-        },
-    },
-});
+import { API, HName } from "../Global";
 
 const Header = () => {
-
     const HospitalDetails = useHospital();
-
-    // Ensure HospitalDetails is defined before accessing properties
-    if (!HospitalDetails) {
-
-        return <h1>Loading...</h1>; // Prevents app crash
-    }
+    const HoName = HName();
     return (
-
         <>
-            <Box sx={{ display: { xs: "none", md: "flex" }, width: "100%", justifyContent: "center" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", padding: "10px", width: "90%" }}>
-                    <div style={{ display: "flex", alignItems: "end", width: "50%" }}>
-                        <Image src="http://localhost:3001/logo/accf_logo.png" alt="logo" width={100} height={100} style={{ marginRight: "20px" }} />
-                        <div >
-                            <h1 style={{ fontSize: "20px", color: "brown", fontWeight: "bold" }}>{HospitalDetails?.name || "Default Hospital"}</h1>
-                            <h5 style={{ fontSize: "12px", color: "brown" }}>A Unit Of Assam Cancer Care Foundation</h5>
-                        </div>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                        <h1 className="gradient-text" style={{ fontSize: "20px", fontWeight: "bolder", fontStyle: "inherit" }}>
+            {/* Header Section */}
+            <Box 
+                sx={{ 
+                    width: "100%", 
+                    display:"flex",
+                    backgroundColor: "#fff", 
+                    py: 1, 
+                    px: { xs: 2, md: 4 } ,
+                    // border:"1px black solid",
+                    justifyContent:"center"
+                }}
+            >
+                <Grid 
+                    container 
+                    alignItems="center"
+                    justifyContent="space-between" 
+                    spacing={2} 
+                    display="flex"
+                    width="100%"
+                    // sx={{ maxWidth: "1400px", margin: "auto" }}
+                    // border="1px black solid"
+                >
+                    {/* Logo & Hospital Name */}
+                    <Grid 
+                        item 
+                        xs={12} md={6} 
+                        sx={{ display: "flex", flexDirection:{xs:"column",sm:"column", md:"row"},alignItems: {sm: "flex-start"}, justifyContent: { xs: "center", sm: "flex-start" } }}
+                    >
+                        <Image 
+                            src={`${API}${HoName}logo/accf_logo.png`}
+                            alt="logo" 
+                            width={80} 
+                            height={80} 
+                            priority 
+                            style={{ marginRight: "10px" }} 
+                        />
+                        <Box textAlign={{ xs: "center", sm: "left" }}>
+                            <Typography 
+                                variant="h6" 
+                                sx={{ color: "brown", fontWeight: "bold", fontSize: { xs: "28px", sm: "18px", md: "20px" } }}
+                                textAlign='start'
+                            >
+                                {HospitalDetails?.name || "Default Hospital"}
+                            </Typography>
+                            <Typography 
+                                variant="body2" 
+                                sx={{ color: "brown", fontSize: { xs: "12px", sm: "14px" } }}
+                                textAlign='start'
+                            >
+                                A Unit Of Assam Cancer Care Foundation
+                            </Typography>
+                        </Box>
+                    </Grid>
+
+                    {/* Contact Info & Social Icons */}
+                    <Grid 
+                        item 
+                        xs={12} md={6} 
+                        sx={{ textAlign: { xs: "center", sm: "right" } }}
+                    >
+                        <Typography 
+                            variant="h6" 
+                            sx={{ fontWeight: "bold", color: "#000", fontSize: { xs: "14px", sm: "16px", md: "18px" } }}
+                        >
                             FOR QUERY & APPOINTMENT, CALL 18003454325
-                        </h1>
-                        <div style={{ display: "flex", gap: "10px", justifyContent: "end" }}>
+                        </Typography>
+                        <Box sx={{ display: "flex", gap: "10px", justifyContent: { xs: "center", sm: "end" }, mt: 1 }}>
                             <SocialIcons
                                 Facebook={HospitalDetails?.Facebook}
                                 Twitter={HospitalDetails?.Twitter}
                                 LinkedIn={HospitalDetails?.LinkedIN}
                                 Instagram={HospitalDetails?.Insta}
                             />
-                        </div>
-                    </div>
-                </div>
+                        </Box>
+                    </Grid>
+                </Grid>
             </Box>
-            <Navbar Title={HospitalDetails.name} />
+
+            {/* Navbar */}
+            <Navbar Title={HospitalDetails?.name} />
+
+            {/* Updates Section */}
             <Box display="flex" height="30px" width="100%">
-                <Box display="flex" height="100%" paddingX="10px" sx={{ backgroundColor: "brown" }} justifyContent="center" alignItems="center" color="white" fontWeight="bold">
+                <Box 
+                    display="flex" 
+                    height="100%" 
+                    px="10px" 
+                    sx={{ backgroundColor: "brown", justifyContent: "center", alignItems: "center", color: "white", fontWeight: "bold" }}
+                >
                     UPDATES
                 </Box>
                 <Box
@@ -79,7 +109,7 @@ const Header = () => {
                         borderTop: "15px solid transparent",
                         borderBottom: "15px solid transparent",
                         borderLeft: "15px solid brown",
-                        marginLeft: "5px",
+                        ml: "5px",
                     }}
                 />
             </Box>

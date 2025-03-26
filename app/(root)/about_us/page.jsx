@@ -2,12 +2,14 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import OurHospitals from "../../(components)/OurHospitals"
 import Entries from "./entries";
+import { API, HName } from "@/app/(components)/Global";
 
 const page = () => {
+    const HoName = HName();
     return (<>
         <Box display="flex" sx={{ position: "relative", overflow: "hidden" }} width="100%" height="350px">
             <Image
-                src="http://localhost:3001/about/about_us.jpg"
+                src={`${API}${HoName}about/about_us.jpg`}
                 alt="background"
                 fill
                 style={{ objectFit: "cover" }}
@@ -25,17 +27,17 @@ const page = () => {
                 }}
                 
             >
-                <Typography variant="h4" fontWeight="bold" textShadow="2px 2px 10px rgba(0,0,0,0.5)" paddingX={3}>
+                <Typography variant="h4" fontWeight="bold" textshadow="2px 2px 10px rgba(0,0,0,0.5)" paddingX={3}>
                     ABOUT US
                 </Typography>
             </Box>
 
         </Box>
-        <Box padding={4}>
-            <Typography variant="h4" fontStyle="italic" marginTop={1}>Assam cancer care foundation has inaugrated 8 state-of-the-art ACCF cancer hospitals in Assam</Typography>
+        <Box>
+            <Typography sx={{fontSize:{md:32}}} fontStyle="italic" marginTop={1} paddingX={2}>Assam cancer care foundation has inaugrated 8 state-of-the-art ACCF cancer hospitals in Assam</Typography>
             <OurHospitals />
         </Box>
-        <Box padding={4}>
+        <Box sx={{padding:{md:4, sm:1}, marginX:1}}>
             <Entries />
         </Box>
     </>)

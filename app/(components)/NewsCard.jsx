@@ -1,36 +1,47 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography, CardActionArea, Box } from "@mui/material";
+import { Card, CardContent, Typography, CardActionArea, Box } from "@mui/material";
 import Link from "next/link";
+import Image from "next/image";
 
-const NewsCard = ({ image, title = "No Title", text = "No Description", date }) => {
-  const truncateText = (str, limit) => (str.length > limit ? `${str.slice(0, limit)}...` : str);
+const NewsCard = ({ image, title = "No Title", text = "No Description", date = "No Date" }) => {
+  const truncateText = (str = "", limit) => (str.length > limit ? `${str.slice(0, limit)}...` : str);
 
   return (
     <Card
       sx={{
         height: 420,
-        position: "relative",
+        width: "100%",
+        display: "flex",
+        p: 3,
         overflow: "hidden",
-        transition: "transform 0.3s ease-in-out", // Smooth transition
+        position: "relative",
+        transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
         "&:hover": {
-          transform: "scale(1.01)", // Slightly increase size on hover
-          boxShadow: "0px 8px 10px rgba(0, 0, 0, 0.3)", // Add shadow on hover
+          transform: "scale(1.01)",
+          boxShadow: 3,
         },
       }}
     >
       <CardActionArea component={Link} href="/newsAndEvents/details" sx={{ height: "100%" }}>
-        {/* Image with Fixed Height */}
-        <Box sx={{ position: "relative" }}>
-          <CardMedia component="img" image={image} alt={title} sx={{ height: 200, objectFit: "cover" }} />
+        {/* Image Section */}
+        <Box sx={{ position: "relative", height: 200 }}>
+          <Image
+            src={image}
+            alt={title}
+            layout="fill"
+            objectFit="cover"
+            priority={false} // Lazy load for better performance
+            style={{ borderRadius: "4px" }}
+          />
 
-          {/* Overlay Text */}
+          {/* Date Overlay */}
           <Box
             sx={{
               position: "absolute",
               bottom: 0,
               left: 0,
               width: "100%",
-              background: "rgba(0, 0, 0, 0.5)", // Darker transparent background
+              background: "rgba(0, 0, 0, 0.5)",
               color: "white",
               textAlign: "center",
               py: 1,

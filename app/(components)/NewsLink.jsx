@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 import { East } from '@mui/icons-material';
+import { MyAddress } from './Global';
 
 export default function NewsLink() {
   return (
@@ -15,7 +16,7 @@ export default function NewsLink() {
         <CardMedia
           component="img"
           height="140"
-          image="http://localhost:3001/News/news.jpg"
+          image={`${MyAddress}News/news.jpg`}
           alt="green iguana"
         />
         <CardContent>

@@ -8,7 +8,7 @@ export const DoctorDetails = ({ path, name, qualification, description }) => {
     <Grid item>
       <Box sx={{ boxShadow: 1, borderRadius: 1, overflow: "hidden", bgcolor: "background.paper" }}>
         <Image 
-          src={`http://localhost:3001/${path}` || "/Doctors/doctor_image.webp"} 
+          src={`${API}${path}` || "/Doctors/doctor_image.webp"} 
           alt="Doctor's Image" 
           width={385} 
           height={380} 

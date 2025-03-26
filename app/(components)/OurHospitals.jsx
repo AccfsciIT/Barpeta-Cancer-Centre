@@ -1,58 +1,61 @@
 "use client";
 import { Box, Grid, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import {HospitalID, API} from "../(components)/Global";
+import { useEffect, useState } from "react";
+import { fetchHospitals } from "../../lib/fetchData";
 import Loader from "./Loader";
 
-const Hospitals = [{ name: "Barpeta Cancer Centre" }, { name: "Dibrugarh Cancer Centre" }];
-
 const OurHospitals = () => {
-    const [ourHospitals, setOurHospitals] = useState({});
+    const [ourHospitals, setOurHospitals] = useState([]);
     const [loading, setLoading] = useState(true);
-    const fetchHospitals = async () => {
-        try {
-            const response = await fetch(`${API}api/our_hospitals?HospitalID=${HospitalID}`);
-            const data = await response.json();
-            if (response.ok) {
-                setOurHospitals(data.result);
-                // console.log("Images=", data.result);
-            } else {
-                console.error("Error:", data.error);
-            }
-        } catch (error) {
-            console.error("Failed to fetch hospital details:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetchHospitals();
-    }, [])
+        const loadHospitals = async () => {
+            const data = await fetchHospitals();
+            setOurHospitals(data);
+            setLoading(false);
+        };
+        loadHospitals();
+    }, []);
 
-    if (loading) {
-        return <><Loader/></>;
-    }
+    if (loading) return <Loader />;
+    if (error) return <Typography color="error">{error}</Typography>;
+    if (ourHospitals.length === 0) return <Typography>No hospitals available</Typography>;
+
     return (
-        <Box paddingLeft={4} marginY={5}>
-            <Grid container spacing={2}>
-                {ourHospitals.map((hospital, index) => (
+        <Box marginY={1} marginX={2}>
+            <Grid container>
+                {ourHospitals.map((hospital) => (
                     <Grid
-                        key={index}
+                        key={hospital.id}
                         item md={4} lg={3} xs={12}
+                        marginBottom={1}
                         sx={{
-                            backgroundColor: "#0076bd",
-                            color: "white",
-                            paddingY: 2,
-                            paddingX: 5,
-                            borderRadius: 10,
                             justifyContent: "center",
                             alignItems: "center",
-                            display: "flex"
+                            display: "flex",
                         }}
-                        marginRight={1}
                     >
-                        <Typography textAlign="center">{hospital.name}</Typography>
+                        <a
+                            href={hospital.domain}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                                backgroundColor: "#0076bd",
+                                color: "white",
+                                borderRadius: "50px",
+                                display: "flex",
+                                width: "98%",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                padding: 1,
+                                textDecoration: "none", // ✅ Removed default underline
+                            }}
+                        >
+                            <Typography paddingY={1} textAlign="center">
+                                {hospital.name || "Unnamed Hospital"}
+                            </Typography>
+                        </a>
                     </Grid>
                 ))}
             </Grid>

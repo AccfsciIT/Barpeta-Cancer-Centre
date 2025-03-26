@@ -1,101 +1,84 @@
-"use client";
-import { useEffect, useState, useMemo } from "react";
-import ImageSlider from "../(components)/ImageSlider";
-import DoctorCards from "../(components)/DoctorCard/DoctorCards";
-import Facilities from "../(components)/Facilities";
-import Accomplishments from "../(components)/Accomplishments";
-import WhatsHappening from "../(components)/WhatsHappening";
-import OurHospitals from "../(components)/OurHospitals";
 import { Box, Typography } from "@mui/material";
-import {HospitalID, API} from "../(components)/Global";
+import { Suspense, lazy } from "react";
+import { fetchHomeContent, fetchImageSlider, fetchDoctors } from "../../lib/fetchData";
 
-// Define Type for home content
-interface HomeContentType {
-  heading: string;
-  description: string;
-}
+// Lazy load components
+const ImageSlider = lazy(() => import("../(components)/ImageSlider"));
+const DoctorSlider = lazy(() => import("../(components)/DoctorCard/DoctorSlider"));
+const Facilities = lazy(() => import("../(components)/Facilities"));
+const Accomplishments = lazy(() => import("../(components)/Accomplishments"));
+const WhatsHappening = lazy(() => import("../(components)/WhatsHappening"));
+const OurHospitals = lazy(() => import("../(components)/OurHospitals"));
 
-export default function Home() {
-  const [homeContent, setHomeContent] = useState<HomeContentType | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  // Memoize API URL
-  const apiUrl = useMemo(() => `${API}api/home_text?HospitalID=${HospitalID}`, []);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const { signal } = controller;
-
-    const fetchHome = async () => {
-      try {
-        const response = await fetch(apiUrl, { signal });
-        const data = await response.json();
-
-        if (response.ok && data.result?.length) {
-          setHomeContent(data.result[0]);
-        } else {
-          console.error("Error:", data.error);
-        }
-      } catch (error) {
-        if (error instanceof Error && error.name !== "AbortError") {
-          console.error("Failed to fetch home content:", error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchHome();
-
-    return () => controller.abort(); // Cleanup on unmount
-  }, [apiUrl]);
-
-  if (loading) return <Typography>Loading...</Typography>;
+// ✅ Server Component
+export default async function Home() {
+  const homeContent = await fetchHomeContent();
+  const images = await fetchImageSlider();
+  // const doctors = await fetchDoctors();
 
   return (
     <>
       {/* Hero Section */}
-      <Box display="flex" alignItems="end" flexDirection="column">
-        <Box display="flex" width="100%" sx={{ flexDirection: { xs: "column", md: "row" } }}>
-          <ImageSlider />
-          <Box padding={2} sx={{ width: { xs: "100%", md: "40%" } }}>
-            <Typography variant="h5">{homeContent?.heading || "Default Heading"}</Typography>
-            <Typography textAlign="justify">{homeContent?.description || "Default description"}</Typography>
-          </Box>
+      <Box display="flex" width="100%" sx={{ flexDirection: { xs: "column", md: "row" } }}>
+        <Suspense fallback={<Typography>Loading Slider...</Typography>}>
+          <ImageSlider Images={images} />
+        </Suspense>
+        <Box padding={2} sx={{ width: { xs: "100%", md: "40%" } }}>
+          {homeContent ? (
+            <>
+              <Typography variant="h5">{homeContent.heading}</Typography>
+              <Typography textAlign="justify">{homeContent.description}</Typography>
+            </>
+          ) : (
+            <Typography color="error">Error loading content</Typography>
+          )}
         </Box>
       </Box>
 
       {/* Consultants Section */}
-      <Box margin={1}>
-        <Typography variant="h5" fontWeight="bold" marginLeft={3}>
+      <Box margin={1} height="100vh" paddingY={3}>
+        <Typography variant="h4" fontWeight="bold" marginLeft={3} marginY={3}>
           Consultants
         </Typography>
-        <DoctorCards />
+        <Suspense fallback={<Typography>Loading Doctors...</Typography>}>
+          <DoctorSlider/>
+        </Suspense>
       </Box>
 
       {/* Accomplishments */}
-      <Box textAlign="center" marginY={2}>
-        <Typography color="blue" fontWeight="bold" variant="h5">
+      <Box textAlign="center">
+        <Typography color="#1976d2" fontWeight="bold" variant="h5">
           Our Accomplishments
         </Typography>
         <Typography>As on 1st February 2025</Typography>
       </Box>
-      <Accomplishments />
+      <Suspense fallback={<Typography>Loading Accomplishments...</Typography>}>
+        <Accomplishments />
+      </Suspense>
 
-      {/* Facilities Section */}
-      <Typography variant="h5" fontWeight="bold" paddingX={4}>
+      {/* Facilities */}
+      <Typography variant="h5" fontWeight="bold" paddingX={2}>
         Facilities
       </Typography>
-      <Facilities />
+      <Suspense fallback={<Typography>Loading Facilities...</Typography>}>
+        <Facilities />
+      </Suspense>
 
       {/* What's Happening */}
-      <WhatsHappening />
+      <Typography variant="h5" fontWeight="bold" paddingX={2}>
+        What's Happening
+      </Typography>
+      <Suspense fallback={<Typography>Loading latest events...</Typography>}>
+        <WhatsHappening />
+      </Suspense>
 
-      {/* Our Hospitals Section */}
-      <Typography variant="h5" paddingX={4} fontWeight="bold" marginBottom={3}>
+      {/* Our Hospitals */}
+      <Typography variant="h5" paddingX={2} fontWeight="bold" marginBottom={3}>
         OUR HOSPITALS
       </Typography>
-      <OurHospitals />
+      <Suspense fallback={<Typography>Loading hospital details...</Typography>}>
+        <OurHospitals />
+      </Suspense>
     </>
   );
 }

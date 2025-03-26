@@ -2,11 +2,13 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 // import OurHospitals from "../../(components)/OurHospitals"
 import Entries from "./entries";
+import { API, HName } from "@/app/(components)/Global";
 
 const page = () => {
+    const HoName = HName();
     return (<>
         <Box display="flex" sx={{ position: "relative", overflow: "hidden" }} width="100%" height="350px">
-            <Image src="http://localhost:3001/News/newsEventsBack.jpg" alt="background" fill style={{ objectFit: "cover" }} />
+            <Image src={`${API}${HoName}News/newsEventsBack.jpg`} alt="background" fill style={{ objectFit: "cover" }} />
             <Box
                 sx={{
                     position: "absolute",
