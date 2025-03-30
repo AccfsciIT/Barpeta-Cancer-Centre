@@ -1,124 +1,103 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { FiberManualRecord, LocationCity, Mail, Phone } from "@mui/icons-material";
-import { Box, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Box, Grid, ListItem, ListItemIcon, Typography } from "@mui/material";
 import Link from "next/link";
-import GoogleMapEmbed from "../../(components)/GoogleMap";
+import GoogleMapEmbed from "../Google_Map/GoogleMap";
 import SocialIcons from "../SocialIcons";
-import { useHospital } from "../../(components)/HospitalProvider";
-
-const Hospitals = [
-    { name: "Barpeta Cancer Centre", link: "https://dibrugarhcancercentre.org/" },
-    { name: "Dibrugarh Cancer Centre", link: "https://dibrugarhcancercentre.org/" }
-];
-
-const Facilities = [
-    {
-        Loader: "#0076bd",
-        name: "PET-CT and Medical Cyclotron",
-        image: "/Facilities/PET_CT.jpg",
-        text: "The medical Cyclotron Machine can produce the radio-active substance (FDG) required for PET-CT investigation..."
-    },
-    {
-        Loader: "#0076bd",
-        name: "Bone Marrow Transplant",
-        image: "/Facilities/bmt.jpg",
-        text: "Bone marrow transplantation, also called as hematopoietic stem cell transplantation, is a sophisticated procedure..."
-    },
-    {
-        Loader: "#0076bd",
-        name: "PET-CT and Medical Cyclotron",
-        image: "/Facilities/PET_CT.jpg",
-        text: "The medical Cyclotron Machine can produce the radio-active substance (FDG) required for PET-CT investigation..."
-    },
-    {
-        Loader: "#0076bd",
-        name: "Bone Marrow Transplant",
-        image: "/Facilities/bmt.jpg",
-        text: "Bone marrow transplantation, also called as hematopoietic stem cell transplantation, is a sophisticated procedure..."
-    }
-];
+import { useSelector } from "react-redux";
+import { selectHospitals } from "@/redux/features/hospitalSlice";
+import { selectFacilities } from "@/redux/features/facilitiesSlice";
+import { selectHospitalDetails } from "@/redux/features/hospitalDetailSlice";
 
 const Footer = () => {
-    const HospitalDetails = useHospital();
+    const hospitalData = useSelector(selectHospitalDetails);
+    const hospitalList = useSelector(selectHospitals);
+    const facilityList = useSelector(selectFacilities);
 
-    if (!HospitalDetails) {
+    // Ensure hydration happens only on the client
+    const [hydrated, setHydrated] = useState(false);
+
+    useEffect(() => {
+        setHydrated(true);
+    }, []);
+
+    // 🔹 Wait until hydration is complete to prevent mismatch
+    if (!hydrated) {
+        return null;
+    }
+
+    // If data is still not available after hydration
+    if (!hospitalData || !hospitalList.length || !facilityList.length) {
         return <Typography color="gray">Loading hospital details...</Typography>;
     }
 
+    // 🔹 Reusable ListItem Component
+    const RenderListItem = ({ text }) => (
+        <ListItem sx={{ padding: "4px 0", display: "flex", alignItems: "center" }}>
+            <ListItemIcon sx={{ minWidth: "16px", color: "gray" }}>
+                <FiberManualRecord fontSize="small" sx={{ fontSize: "8px" }} />
+            </ListItemIcon>
+            <Typography sx={{ color: "gray", fontSize: "14px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                {text}
+            </Typography>
+        </ListItem>
+    );
+
     return (
-        <Box
-            sx={{
-                display: "flex",
-                width: "100%",
-                flexDirection: "column",
-                alignItems: "center",
-                padding: 1,
-                backgroundColor: "#f9f9f9", // Light background
-            }}
-        >
+        <Box sx={{ display: "flex", width: "100%", flexDirection: "column", alignItems: "center", padding: 1, backgroundColor: "#f9f9f9", color: 'black' }}>
             <Grid container spacing={3} justifyContent="center" width={{ xs: "100%", md: "90%" }}>
+
                 {/* Our Hospitals */}
                 <Grid item xs={12} sm={6} lg={2}>
                     <Typography variant="h6" mb={1}>Our Hospitals</Typography>
-                    {Hospitals.map((Hospital) => (
-                        <Link href={Hospital.link} passHref legacyBehavior key={Hospital.name}>
-                            <Typography color="gray" fontSize="14px" sx={{ "&:hover": { color: "#0076bd", cursor: "pointer" } }}>
-                                {Hospital.name}
-                            </Typography>
-                        </Link>
+                    {hospitalList.map((hospital, index) => (
+                        <RenderListItem key={hospital.id || index} text={hospital.name} />
                     ))}
                 </Grid>
 
                 {/* Facilities */}
                 <Grid item xs={12} sm={6} lg={4}>
                     <Typography variant="h6" mb={1}>Facilities</Typography>
-                    <Grid container display="flex" width="100%">
-                        {/* <List sx={{ padding: 0 }}> */}
-                            {Facilities.map((Facility) => (
-                                <Grid item xs={6}>
-                                    <Link href="/" passHref legacyBehavior key={Facility.name}>
-                                        <ListItem sx={{ padding: "4px 0" }}>
-                                            <ListItemIcon sx={{ minWidth: "10px", color: "gray" }}>
-                                                <FiberManualRecord fontSize="small" sx={{ fontSize: "8px" }} />
-                                            </ListItemIcon>
-                                            <ListItemText secondary={Facility.name} sx={{ color: "gray", fontSize: "14px" }} />
-                                        </ListItem>
-                                    </Link>
-                                </Grid>
-                            ))}
-                        {/* </List> */}
+                    <Grid container spacing={1}>
+                        {facilityList.map((facility, index) => (
+                            <Grid item xs={6} key={facility.id || index}>
+                                <Link href="/" passHref legacyBehavior>
+                                    <RenderListItem text={facility.title} />
+                                </Link>
+                            </Grid>
+                        ))}
                     </Grid>
                 </Grid>
 
-                {/* Contact us */}
+                {/* Contact Us */}
                 <Grid item xs={12} sm={6} lg={3}>
                     <Typography variant="h6" mb={1}>Contact Us</Typography>
-                    <Typography color="gray" fontSize="14px" display="flex" alignItems="center" mb={1}>
-                        <Phone sx={{ color: "gray", mr: 1 }} />
-                        {HospitalDetails.PhoneNumber || "Not Available"}
-                    </Typography>
-                    <Typography color="gray" fontSize="14px" display="flex" alignItems="center" mb={1}>
-                        <Mail sx={{ color: "gray", mr: 1 }} />
-                        info@accf.in
-                    </Typography>
-                    <Typography color="gray" fontSize="14px" display="flex" alignItems="center" mb={3}>
-                        <LocationCity sx={{ color: "gray", mr: 1 }} />
-                        {HospitalDetails.Address || "Not Available"}
-                    </Typography>
+                    {[
+                        { icon: <Phone sx={{ color: "gray", mr: 1 }} />, text: hospitalData.PhoneNumber || "Not Available" },
+                        { icon: <Mail sx={{ color: "gray", mr: 1 }} />, text: "info@accf.in" },
+                        { icon: <LocationCity sx={{ color: "gray", mr: 1 }} />, text: hospitalData.Address || "Not Available" }
+                    ].map((item, index) => (
+                        <Typography key={index} color="gray" fontSize="14px" display="flex" alignItems="center" mb={1}>
+                            {item.icon} {item.text}
+                        </Typography>
+                    ))}
+
                     <SocialIcons
-                        Facebook={HospitalDetails.Facebook}
-                        Twitter={HospitalDetails.Twitter}
-                        LinkedIn={HospitalDetails.LinkedIN}
-                        Instagram={HospitalDetails.Insta}
+                        Facebook={hospitalData.Facebook}
+                        Twitter={hospitalData.Twitter}
+                        LinkedIn={hospitalData.LinkedIN}
+                        Instagram={hospitalData.Insta}
                     />
                 </Grid>
 
                 {/* Location */}
                 <Grid item xs={12} sm={6} lg={3}>
                     <Typography variant="h6" mb={1}>Landmark</Typography>
-                    <GoogleMapEmbed URL={HospitalDetails.Location || ""} />
+                    <GoogleMapEmbed URL={hospitalData.Location || ""} />
                 </Grid>
+
             </Grid>
         </Box>
     );

@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import { Box } from "@mui/material";
 import Image from "next/image";
 
@@ -12,6 +12,7 @@ const AnimatedImages = () => {
         fill
         priority
         className="background"
+        // sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
 
       {/* Moving Car */}
@@ -21,6 +22,7 @@ const AnimatedImages = () => {
         width={250}
         height={200}
         className="moving-car"
+        // sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
 
       {/* Moving Cyclist */}
@@ -30,6 +32,7 @@ const AnimatedImages = () => {
         width={100}
         height={70}
         className="moving-cyclist"
+        // sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     </Box>
   );

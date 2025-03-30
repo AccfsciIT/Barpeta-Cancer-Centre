@@ -1,37 +1,17 @@
-"use client";
+// "use client";
 import { Box, Grid, Typography } from "@mui/material";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { API } from "../../(components)/Global";
-import Loader from "../../(components)/Loader";
-import { fetchAboutUs } from "@/lib/fetchData";
+import Loader from "@/app/(components)/Loader";
+// import Loader from "../../(components)/Loader";
+// import { fetchAboutUs } from "@/lib/fetchData";
 
-const Entries = () => {
-  const [Entris, setEntries] = useState([]); // ✅ Initialize as an empty array
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchAbout = async () => {
-      try {
-        const data = await fetchAboutUs();
-        setEntries(data || []); // ✅ Ensure it's an array
-      } catch (error) {
-        console.error("Error fetching About Us data:", error);
-        setEntries([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAbout();
-  }, []);
-
-  if (loading) return <Loader />;
-
+const Entries = (props) => {
+  const {Entris} = props;
   if (!Entris.length) {
-    return <Typography color="error">No data available</Typography>;
+    return <Loader/>;
   }
-
   return (
     <Box display="flex" flexDirection="column" width="100%">
       {Entris.map((Entry, index) => (

@@ -4,8 +4,8 @@ import { HospitalID, API } from "@/app/(components)/Global";
 export async function fetchHomeContent() {
   try {
     const response = await fetch(`${API}api/home_text?HospitalID=${HospitalID}`, {
-      cache: "force-cache",
-      next: { revalidate: 900 },
+      // cache: "force-cache",
+      next: { revalidate: 60 },
     });
     const data = await response.json();
     return response.ok && data.result?.length ? data.result[0] : null;
@@ -19,8 +19,8 @@ export async function fetchHomeContent() {
 export async function fetchImageSlider() {
   try {
     const response = await fetch(`${API}api/home_image_slider?HospitalID=${HospitalID}`, {
-      cache: "force-cache",
-      next: { revalidate: 900 },
+      // cache: "force-cache",
+      next: { revalidate: 60 },
     });
     const data = await response.json();
     return data.result || [];
@@ -34,8 +34,8 @@ export async function fetchImageSlider() {
 export async function fetchDoctors() {
   try {
     const response = await fetch(`${API}api/doctors?HospitalID=${HospitalID}`, {
-      cache: "force-cache",
-      next: { revalidate: 900 },
+      // cache: "force-cache",
+      next: { revalidate: 60 },
     });
     const data = await response.json();
     return data.result || [];
@@ -49,8 +49,8 @@ export async function fetchDoctors() {
 export async function fetchAccomplishments() {
   try {
     const response = await fetch(`${API}api/accomplishments?HospitalID=${HospitalID}`, {
-      cache: "force-cache",
-      next: { revalidate: 900 },
+      // cache: "force-cache",
+      next: { revalidate: 60 },
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Failed to fetch accomplishments");
@@ -65,7 +65,7 @@ export async function fetchAccomplishments() {
 export async function fetchFacilities() {
   try {
     const response = await fetch(`${API}api/facilities?HospitalID=${HospitalID}`, {
-      cache: "force-cache",
+      // cache: "force-cache",
       next: { revalidate: 900 },
     });
     const data = await response.json();
@@ -81,7 +81,7 @@ export async function fetchFacilities() {
 export async function fetchHospitals() {
   try {
     const response = await fetch(`${API}api/our_hospitals`, {
-      cache: "force-cache",
+      // cache: "force-cache",
       next: { revalidate: 900 },
     });
     const data = await response.json();
@@ -97,7 +97,7 @@ export async function fetchHospitals() {
 export async function fetchAboutUs() {
   try {
     const response = await fetch(`${API}api/about_us?HospitalID=${HospitalID}`, {
-      cache: "force-cache",
+      // cache: "force-cache",
       next: { revalidate: 900 },
     });
     const data = await response.json();
@@ -113,7 +113,7 @@ export async function fetchAboutUs() {
 export async function fetchNewsAndEvents() {
   try {
     const response = await fetch(`${API}api/news_events?HospitalID=${HospitalID}`, {
-      cache: "force-cache",
+      // cache: "force-cache",
       next: { revalidate: 900 },
     });
     const data = await response.json();
@@ -129,7 +129,7 @@ export async function fetchNewsAndEvents() {
 export async function fetchHospitalDetailsAPI() {
   try {
     const response = await fetch(`${API}api/hospital_details?HospitalID=${HospitalID}`, {
-      cache: "force-cache",
+      // cache: "force-cache",
       next: { revalidate: 900 },
     });
     const data = await response.json();

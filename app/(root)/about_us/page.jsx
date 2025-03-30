@@ -1,11 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
-import OurHospitals from "../../(components)/OurHospitals"
 import Entries from "./entries";
 import { API, HName } from "@/app/(components)/Global";
+import { fetchAboutUs } from "@/lib/fetchData";
+import OurHospitalsPage from "@/app/(components)/Hospitals/OurHospitalsPage";
 
-const page = () => {
+const page = async() => {
     const HoName = HName();
+    const Entris = await fetchAboutUs();
     return (<>
         <Box display="flex" sx={{ position: "relative", overflow: "hidden" }} width="100%" height="350px">
             <Image
@@ -13,6 +15,8 @@ const page = () => {
                 alt="background"
                 fill
                 style={{ objectFit: "cover" }}
+                sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority
             />
 
             <Box
@@ -35,10 +39,10 @@ const page = () => {
         </Box>
         <Box>
             <Typography sx={{fontSize:{md:32}}} fontStyle="italic" marginTop={1} paddingX={2}>Assam cancer care foundation has inaugrated 8 state-of-the-art ACCF cancer hospitals in Assam</Typography>
-            <OurHospitals />
+            <OurHospitalsPage/>
         </Box>
         <Box sx={{padding:{md:4, sm:1}, marginX:1}}>
-            <Entries />
+            <Entries entries={Entris}/>
         </Box>
     </>)
 }

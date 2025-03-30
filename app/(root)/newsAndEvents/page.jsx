@@ -3,12 +3,15 @@ import Image from "next/image";
 // import OurHospitals from "../../(components)/OurHospitals"
 import Entries from "./entries";
 import { API, HName } from "@/app/(components)/Global";
+import { fetchNewsAndEvents } from "@/lib/fetchData";
 
-const page = () => {
+const page = async () => {
     const HoName = HName();
+    const news = await fetchNewsAndEvents();
+    // const OurHospitals = await fetchHospitals();
     return (<>
         <Box display="flex" sx={{ position: "relative", overflow: "hidden" }} width="100%" height="350px">
-            <Image src={`${API}${HoName}News/newsEventsBack.jpg`} alt="background" fill style={{ objectFit: "cover" }} />
+            <Image src={`${API}${HoName}News/newsEventsBack.jpg`} alt="background" fill style={{ objectFit: "cover" }} sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
             <Box
                 sx={{
                     position: "absolute",
@@ -21,13 +24,13 @@ const page = () => {
                 }}
                 
             >
-                <Typography variant="h4" fontWeight="bold" textShadow="2px 2px 10px rgba(0,0,0,0.5)" paddingX={3}>
+                <Typography variant="h4" fontWeight="bold" textshadow="2px 2px 10px rgba(0,0,0,0.5)" paddingX={3}>
                     NEWS & EVENTS
                 </Typography>
             </Box>
         </Box>
         <Box display="flex"  justifyContent="center" marginY={4}>
-            <Entries/>
+            <Entries news={news}/>
         </Box>
     </>)
 }

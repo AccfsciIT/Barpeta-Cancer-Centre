@@ -1,5 +1,6 @@
+'use client'
 import { Box, Typography } from "@mui/material";
-import ImageSlider from "../../../(components)/ImageSlider"
+// import ImageSlider from "../../../(components)/ImageSlider"
 // import Entries from "./entries";
 
 const page = () => {
@@ -17,7 +18,7 @@ const page = () => {
 
                 NEOS 2024 - with its diverse sessions, lectures, and panel discussions - not only showcased the advancements in oncology care but also encouraged an interactive exchange of ideas. The inclusion of MSD sessions and video presentations added a layer of innovation - ensuring that the summit remained dynamic and engaging. As the Summit concluded, it left a trail of insights - laying the foundation for ongoing advancements in the fight against cancer. The key sessions not only fueled intellectual discourse but, are also poised to inspire collaborative efforts to address the unique challenges faced in Northeast India's healthcare landscape.</Typography>
 
-                <ImageSlider/>
+                {/* <ImageSlider/> */}
         </Box>
     </Box>)
 }

@@ -27,10 +27,15 @@ const ImageSlider = ({ Images = [] }) => {
         effect="fade" // Smooth fade effect between slides
         spaceBetween={10}
         slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
         autoplay={{ delay: 3000, disableOnInteraction: false }} // Auto slide with smooth transition
         speed={1000} // Smooth transition speed
+        pagination={{ clickable: true }}
+        navigation={false} // Default: No navigation
+        breakpoints={{
+          768: {
+            navigation: true, // Enable navigation for screens >= 768px
+          },
+        }}
         style={{ borderRadius: "10px" }} // Round corners
       >
         {Images.length > 0 ? (
@@ -38,7 +43,7 @@ const ImageSlider = ({ Images = [] }) => {
             <SwiperSlide key={index}>
               <Image
                 src={`${API}${image.path}`}
-                alt={`Slide ${index + 1}`}
+                alt='img'
                 width={600}
                 height={300}
                 style={{
@@ -47,6 +52,7 @@ const ImageSlider = ({ Images = [] }) => {
                   objectFit: "cover",
                   transition: "transform 1.5s ease-in-out",
                 }}
+                sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </SwiperSlide>
           ))
@@ -63,6 +69,7 @@ const ImageSlider = ({ Images = [] }) => {
                 objectFit: "cover",
                 opacity: 0.5, // Slight dim effect
               }}
+              sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </SwiperSlide>
         )}

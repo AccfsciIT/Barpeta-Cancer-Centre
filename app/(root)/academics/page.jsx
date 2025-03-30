@@ -1,9 +1,11 @@
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import Image from "next/image";
-import OurHospitals from "../../(components)/OurHospitals"
+// import OurHospitals from "../../(components)/OurHospitals"
 import Entries from "./entries";
+import { fetchAboutUs } from "@/lib/fetchData";
 
-const page = () => {
+const page = async() => {
+    const Entris = await fetchAboutUs();
     return (<>
         <Box display="flex" sx={{ position: "relative", overflow: "hidden" }} width="100%" height="350px">
             <Image
@@ -43,7 +45,7 @@ const page = () => {
             </List>
         </Box>
         <Box padding={4}>
-            <Entries />
+            <Entries Entris={Entris}/>
         </Box>
     </>)
 }

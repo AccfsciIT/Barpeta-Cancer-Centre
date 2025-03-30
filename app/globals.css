@@ -72,6 +72,7 @@ body {
 
 .moving-car {
   position: absolute;
+  height: auto;
   bottom: -20px;
   animation: moveAcross 18s linear infinite;
 }
@@ -89,4 +90,14 @@ body {
   to {
     transform: translateX(100vw);
   }
+}
+
+.animation {
+  animation: color-change 1s infinite;
+}
+
+@keyframes  color-change {
+  0% { color: red; }
+  50% { color: blue; }
+  100% { color: red; }
 }

@@ -13,6 +13,7 @@ export const DoctorDetails = ({ path, name, qualification, description }) => {
           width={385} 
           height={380} 
           style={{ width: "100%", display: "block" }} 
+          sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <Box p={2}>
           {/* <Typography color="black"><LocationOn sx={{ color: "red" }} />Guwahati</Typography> */}

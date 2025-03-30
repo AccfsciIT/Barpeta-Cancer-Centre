@@ -1,38 +1,11 @@
-"use client";
-import { Box, Grid, Typography } from "@mui/material";
+// "use client";
+import { Box, Grid } from "@mui/material";
 import NewsCard from "../../(components)/NewsCard";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Loader from "../../(components)/Loader";
-import { API, HospitalID, HName } from "@/app/(components)/Global";
-import { fetchNewsAndEvents } from "@/lib/fetchData";
+import { API,HName } from "@/app/(components)/Global";
 
-const Entries = () => {
+const Entries = (props) => {
     const HoName = HName();
-    const [news, setNews] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const fetchNews = async () => {
-        setLoading(true);
-        try {
-            const data = await fetchNewsAndEvents();
-            setNews(data || []); // ✅ Ensure it's an array
-        } catch (error) {
-            console.error("Error fetching About Us data:", error);
-            setNews([]);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchNews();
-    }, []);
-
-    if (loading) {
-        return <><Loader /></>;
-    }
-
+    const {news} = props;
     return (
         <Box display="flex" flexDirection="column" alignItems="center" width='100%' margin="auto">
             <Grid container spacing={3} justifyContent="start" display='flex' sx={{ width: { md: '80%', sm: '100%' } }}>

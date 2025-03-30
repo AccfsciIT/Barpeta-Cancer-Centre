@@ -12,7 +12,7 @@ const NewsCard = ({ image, title = "No Title", text = "No Description", date = "
         height: 420,
         width: "100%",
         display: "flex",
-        p: 3,
+        m: 3,
         overflow: "hidden",
         position: "relative",
         transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
@@ -27,11 +27,12 @@ const NewsCard = ({ image, title = "No Title", text = "No Description", date = "
         <Box sx={{ position: "relative", height: 200 }}>
           <Image
             src={image}
-            alt={title}
-            layout="fill"
+            alt='img'
+            fill
             objectFit="cover"
             priority={false} // Lazy load for better performance
             style={{ borderRadius: "4px" }}
+            sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
 
           {/* Date Overlay */}

@@ -1,13 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
-import Facilities from "../../(components)/Facilities"
+import Facilities from "../../(components)/Facilities/FacilityData"
 import { API, HName } from "@/app/(components)/Global";
 
 const page = () => {
     const HoName = HName();
     return (<>
         <Box display="flex" sx={{ position: "relative", overflow: "hidden" }} width="100%" height="350px">
-            <Image src={`${API}${HoName}Facilities/facilities_bg.jpg`} alt="background" fill style={{ objectFit: "cover" }} />
+            <Image src={`${API}${HoName}Facilities/facilities_bg.jpg`} alt="background" fill style={{ objectFit: "cover" }} sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
             <Box
                 sx={{
                     position: "absolute",
@@ -20,7 +20,7 @@ const page = () => {
                 }}
                 
             >
-                <Typography variant="h4" fontWeight="bold" textShadow="2px 2px 10px rgba(0,0,0,0.5)" paddingX={3}>
+                <Typography variant="h4" fontWeight="bold" textshadow="2px 2px 10px rgba(0,0,0,0.5)" paddingX={3}>
                     Facilities
                 </Typography>
             </Box>

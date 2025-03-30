@@ -2,10 +2,12 @@
 
 import { LocationCity, Mail, Phone } from "@mui/icons-material";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { useHospital } from "../../(components)/HospitalProvider";
+// import { useHospital } from "../../(components)/HospitalProvider";
+import { useSelector } from "react-redux";
+import { selectHospitalDetails } from "@/redux/features/hospitalDetailSlice";
 
 const ContactPage = () => {
-    const HospitalDetails = useHospital();
+    const HospitalDetails = useSelector(selectHospitalDetails);
 
     // Ensure HospitalDetails is not null before rendering
     if (!HospitalDetails) {
@@ -76,7 +78,7 @@ const ContactPage = () => {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <Button variant="contained" fullWidth size="small">Submit</Button>
+                            <Button variant="contained" fullWidth size="small" aria-label="Submit Form">Submit</Button>
                         </Grid>
                     </Grid>
                 </Grid>

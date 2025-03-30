@@ -1,6 +1,6 @@
 import { Box, Grid, List, ListItem, ListItemText, Typography } from "@mui/material";
-import Image from "next/image";
-import OurHospitals from "../../(components)/OurHospitals"
+// import Image from "next/image";
+// import OurHospitals from "../../(components)/OurHospitals"
 // import Entries from "./entries";
 
 const page = () => {

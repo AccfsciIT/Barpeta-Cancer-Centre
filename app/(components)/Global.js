@@ -1,6 +1,6 @@
-export const HospitalID = 2; 
-export const API = 'http://172.16.2.81:3001/';
-export const MyAddress = 'http://172.16.2.81:3000/';
+export const HospitalID = 8; 
+export const API = 'http://192.168.31.194:3001/';
+export const MyAddress = 'http://192.168.31.194:3000/';
 // export const HName = 'Lakhimpur/';
 
 export const HName = () => {

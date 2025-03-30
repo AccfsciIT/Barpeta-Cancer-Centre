@@ -1,42 +1,19 @@
-"use client";
 import { Box, Grid, Typography } from "@mui/material";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { API } from "../../(components)/Global";
-import Loader from "../../(components)/Loader";
-import { fetchAboutUs } from "@/lib/fetchData";
 
-const Entries = () => {
-  const [Entris, setEntries] = useState([]); // ✅ Initialize as an empty array
-  const [loading, setLoading] = useState(true);
+const Entries = async (props) => {
+  const {entries} = props;
 
-  useEffect(() => {
-    const fetchAbout = async () => {
-      try {
-        const data = await fetchAboutUs();
-        setEntries(data || []); // ✅ Ensure it's an array
-      } catch (error) {
-        console.error("Error fetching About Us data:", error);
-        setEntries([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAbout();
-  }, []);
-
-  if (loading) return <Loader />;
-
-  if (!Entris.length) {
-    return <Typography color="error">No data available</Typography>;
+  if (!entries || entries.length === 0) {
+    return null;
   }
 
   return (
     <Box display="flex" flexDirection="column" width="100%">
-      {Entris.map((Entry, index) => (
+      {entries.map((entry, index) => (
         <Grid
-          key={Entry.title}
+          key={entry.title}
           container
           width="100%"
           sx={{
@@ -46,21 +23,24 @@ const Entries = () => {
             mb: 2,
           }}
         >
-          {/* Image Section */}
+          {/* ✅ Image Section (Fixed: Parent `Box` now has `position: relative`) */}
           <Grid
             item
             xs={12}
             md={6}
             padding={{ xs: 2, md: 4 }}
-            sx={{ position: "relative", overflow: "hidden" }}
+            display="flex"
+            width="100%"
+            sx={{ overflow: "hidden" }}
           >
-            <Box width="100%" sx={{ height: { xs: "150px", md: "300px" } }}>
+            <Box width="100%" sx={{ height: { xs: "150px", md: "300px" }, position: "relative" }}>
               <Image
-                src={`${API}${Entry.path}`}
-                alt="who we are"
-                layout="fill"
+                src={`${API}${entry.path}`}
+                alt="Who we are"
+                fill
                 style={{ objectFit: "cover", borderRadius: 5 }}
-                priority={index === 0} // ✅ Load first image faster
+                sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority={index === 0}
               />
             </Box>
           </Grid>
@@ -75,8 +55,12 @@ const Entries = () => {
             flexDirection="column"
             justifyContent="center"
           >
-            <Typography variant="h6" fontWeight="bold">{Entry.title}</Typography>
-            <Typography>{Entry.description}</Typography>
+            <Typography variant="h6" fontWeight="bold">
+              {entry.title}
+            </Typography>
+            <Typography>
+              {entry.description}
+            </Typography>
           </Grid>
         </Grid>
       ))}

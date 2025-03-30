@@ -12,11 +12,12 @@ import {
   Grid,
   LinearProgress,
   Tab,
+  Avatar,
 } from "@mui/material";
 import { LocationOn, TaskAlt, Share as ShareIcon } from "@mui/icons-material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { API } from "./Global";
 
 const ExpandMore = styled(IconButton)(({ theme, expand }) => ({
@@ -36,81 +37,72 @@ const NewDoctorCard = ({ name, speciality, image, text }) => {
 
   return (
     <Card
-      sx={{
-        width: "100%",
-        maxWidth: 480,
-        mx: "auto",
-        height: 550,
-        display: "flex",
-        flexDirection: "column",
-        p: 1,
-        overflow: "hidden",
-        background: "hsla(210, 100%, 80%, 0.2)",
-        backdropFilter: "blur(10px)",
-        boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)",
-      }}
+    sx={{
+      width: 360, // Fixed width
+      maxWidth: 360, // Ensures it does not expand
+      mx: "auto",
+      height: 550,
+      display: "flex",
+      flexDirection: "column",
+      p: 2,
+      overflow: "hidden",
+      boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)",
+    }}
     >
-      <CardHeader
-        avatar={
+      <Box display='flex' flexDirection='column' width='100%' padding={1}>
+        <Box display='flex' width='100%' justifyContent='space-between'>
+          <Box display="flex" width="100%" justifyContent="space-between">
+            <Typography fontWeight="bold" variant="h6">{name}</Typography>
+            <IconButton>
+              <ShareIcon sx={{ fontSize: 32 }} />
+            </IconButton>
+          </Box>
+        </Box>
+        <Box display='flex' width='100%' justifyContent='space-between'>
           <Box
-            sx={{
-              position: "relative",
-              width: 130,
-              height: 130,
-              borderRadius: "50%",
-              overflow: "hidden",
-            }}
+            display="flex"
+            width="120px"
+            height="120px"
+            overflow="hidden"
+            borderRadius="50%"
+            padding='5px'
           >
-            <Image
-              src={`${API}${image}`}
-              alt={name}
-              layout="fill"
-              objectFit="cover"
-              priority
+            <Avatar
+              src={`${API}${image}`} // Replace with your image URL
+              sx={{ width: "100%", height: "100%" }}
             />
           </Box>
-        }
-        title={
-          <Box mb={2}>
-            <Box display="flex" width="100%" justifyContent="space-between">
-              <Typography fontWeight="bold">{name}</Typography>
-              <IconButton>
-                <ShareIcon sx={{ fontSize: 32 }} />
-              </IconButton>
-            </Box>
-            <Typography color="gray">{speciality}</Typography>
-          </Box>
-        }
-        subheader={
-          <>
-            <LinearProgress
-              variant="determinate"
-              value={20}
-              sx={{
-                backgroundColor: "lightred",
-                "& .MuiLinearProgress-bar": { backgroundColor: "#1976d2" },
-              }}
-            />
-            <Box mt={2} display="flex" justifyContent="space-between">
-              <Typography>Department</Typography>
-              <Link href="/consultants/1" passHref>
-                <Button>View Profile</Button>
-              </Link>
-            </Box>
-            <Box display="flex" alignItems="center">
-              <LocationOn sx={{ color: "red" }} />
-              <Typography fontWeight="bold">Location</Typography>
-            </Box>
-          </>
-        }
-      />
 
-      <CardContent sx={{ flex: 1, overflowY: "auto" }}>
+          <Box display='flex' width='60%' flexDirection='column'>
+            <Typography color="#0D47A1" noWrap
+              overflow="hidden"
+              textOverflow="ellipsis">{speciality}</Typography>
+            <Box sx={{ width: '100%' }} marginY={1}>
+              <LinearProgress variant="determinate" value={40} />
+            </Box>
+            <Box display='flex' width='100%' justifyContent='space-between'>
+              <Typography>Department</Typography>
+            </Box>
+          </Box>
+        </Box>
+        <Box display="flex" width='100%' justifyContent='space-between' marginTop={2} alignItems='center'>
+          <Box display='flex'>
+            <LocationOn sx={{ color: "red" }} />
+            <Typography fontWeight="bold">Location</Typography>
+          </Box>
+
+          <Link href="/consultants/1" passHref>
+            <Button aria-label="profile">View Profile</Button>
+          </Link>
+        </Box>
+      </Box>
+
+      <CardContent sx={{ flex: 1, overflowY: "auto", padding:0, margin:0}}>
         <TabContext value={tabValue}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider", display: "flex", justifyContent: "center" }}>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <TabList onChange={handleChange} textColor="inherit" indicatorColor="primary">
-              <Tab label="SPECIALIZATION & EXPERTISE" value="1" />
-              <Tab label="QUALIFICATION" value="2" />
+              <Tab label="Specialization" value="1" />
+              <Tab label="Qualification" value="2" />
             </TabList>
           </Box>
 
@@ -133,7 +125,7 @@ const NewDoctorCard = ({ name, speciality, image, text }) => {
       </CardContent>
 
       <CardActions>
-        <Button variant="contained" fullWidth>
+        <Button variant="contained" fullWidth aria-label="meet">
           Meet the Doctor
         </Button>
       </CardActions>

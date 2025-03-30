@@ -15,11 +15,12 @@ const DoctorCard = ({ image, name = "No Name", speciality = "Speciality Not Avai
             <Box sx={{ width: 150, height: 150, borderRadius: "50%", overflow: "hidden", border: "3px solid #ddd" }}>
               <Image
                 src={`${API}${image}`}
-                alt={name}
+                alt='img'
                 width={150}
                 height={150}
                 style={{ objectFit: "cover" }}
                 priority // Optimized loading
+                sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </Box>
           )}

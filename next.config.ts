@@ -1,17 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["barpetacancercentre.org", "localhost", "172.16.2.81"], // Allow both domains & local IP
+    domains: ["barpetacancercentre.org", "192.168.31.194", "192.168.31.194"], // Allow both domains & local IP
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "localhost",
+        hostname: "192.168.31.194",
         port: "3001",
         pathname: "/logo/**", // Adjust based on your image path
       },
       {
         protocol: "http",
-        hostname: "172.16.2.81", // No "http://"
+        hostname: "192.168.31.194", // No "http://"
         port: "3001",
         pathname: "/**", // Adjust based on your image path
       },

@@ -16,10 +16,10 @@ export function HospitalProvider({ children }) {
                 const data = await fetchHospitalDetailsAPI();
                 setHospitalDetails(data || []); // ✅ Ensure it's an array
             } catch (error) {
-                console.error("Error fetching About Us data:", error);
-                setHospitalDetails([]);
+                console.error("Error fetching hospital data:", error);
+                setHospitalDetails(await fetchHospitalDetailsAPI());
             } finally {
-                setLoading(false);
+                // setLoading(false);
             }
         };
 

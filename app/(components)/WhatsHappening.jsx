@@ -1,13 +1,15 @@
 import { Box, Typography } from "@mui/material";
 import NewsLink from "./NewsLink"
 const WhatsHappening = () => {
-    return(<>
-    <Box paddingLeft={4} marginY={5}>
-        <Typography variant="h5" fontWeight="bold" marginBottom={3}>
-            Find out what’s happening
-        </Typography>
-        <NewsLink/>
-    </Box>
+    return (<>
+        <Box marginY={4} display='flex' width='100%' justifyContent='center'>
+            <Box display='flex' width='90%' flexDirection='column'>
+                <Typography variant="h5" fontWeight="bold" marginY={2}>
+                    What's Happening
+                </Typography>
+                <NewsLink />
+            </Box>
+        </Box>
     </>)
 }
 export default WhatsHappening;
